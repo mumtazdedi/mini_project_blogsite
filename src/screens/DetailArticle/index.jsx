@@ -57,7 +57,7 @@ const DetailArticle = () => {
                                 <div className='col mx-3 p-2 rounded card_content'>
                                     <img src={postData.post_banner} alt={postData.judul} className='img-fluid rounded detail_post_banner' />
                                     <div className='card_info bg_primary mt-2 p-2 rounded'>
-                                        <span><b>Penulis : </b> {postData.user.nama}, <b>Diupload pada : </b> {(new Date(postData.tgl_upload).getDate())}-{(new Date(postData.tgl_upload).getMonth())}-{(new Date(postData.tgl_upload).getFullYear())}</span>
+                                        <span><b>Penulis : </b> {postData.user.nama}, <b>Diupload pada : </b> {(new Date(postData.tgl_upload).getDate())}-{(new Date(postData.tgl_upload).getMonth()) + 1}-{(new Date(postData.tgl_upload).getFullYear())}</span>
                                     </div>
                                     <div className='my-2 bg_isi p-2 rounded'>
                                         {/* {postData[0].isi} */}
