@@ -1,46 +1,59 @@
 import React from 'react';
 /** React Router  */
 import { Link } from 'react-router-dom';
-/** Apollo Client */
-import { useMutation } from '@apollo/client';
-import { DELETE_AUTHOR } from '../../GraphQL/Authors/queries';
-import { DELETE_POST } from '../../GraphQL/Posts/queries';
+/** Sweetalert2 */
+import Swal from 'sweetalert2';
 
-const Table = ({ data, tHead, isUserDashboard }) => {
+const Table = ({ data, tHead, isUserDashboard, deleteAuthor, deletePost }) => {
 
     console.log(data)
 
-    const [deleteAuthor] = useMutation(DELETE_AUTHOR, {
-        onCompleted(data) {
-            console.log(data);
-        },
-        onError(error) {
-            console.log(error);
-        }
-    })
-
-    const [deletePost] = useMutation(DELETE_POST, {
-        onCompleted(data) {
-            console.log(data);
-        },
-        onError(error) {
-            console.log(error);
-        }
-    })
-
-    const handleDeleteAuthor = (id) => {
-        deleteAuthor({
-            variables: {
-                id: id
+    const handleDeleteAuthorButton = (id) => {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data yang sudah terhapus akan hilang!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteAuthor({
+                    variables: {
+                        id: id
+                    }
+                })
+                Swal.fire(
+                    'Data sukses terhapus!',
+                    'Data penulis berhasil dihapus.',
+                    'success'
+                )
             }
         })
     }
 
-    const handleDeletePost = (id) => {
-        console.log(id);
-        deletePost({
-            variables: {
-                id: id
+    const handleDeletePostButton = (id) => {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Postingan yang dihapus akan hilang!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletePost({
+                    variables: {
+                        id: id
+                    }
+                })
+                Swal.fire(
+                    'Data sukses terhapus!',
+                    'Data postingan berhasil dihapus.',
+                    'success'
+                )
             }
         })
     }
@@ -62,21 +75,6 @@ const Table = ({ data, tHead, isUserDashboard }) => {
                     </div>
                     {
                         tHead.length > 3 ? (
-                            // JSON.parse(localStorage.getItem('token')).__typename === 'authors' ? (
-                            //     oneAuthor.map((post, itemIdx) => (
-                            //         <div className='rounded align-items-center p-2 bg-light row mb-2 card_post' key={itemIdx}>
-                            //             <div className='col-1 text-center'>{itemIdx + 1}</div>
-                            //             <div className='col text-start'>{post.judul}</div>
-                            //             {/* <div className='col text-start'>{post.author.nama}</div> */}
-                            //             <div className='col text-center'>
-                            //                 <Link to={`/edit-post/${post.id}`} className='btn btn-sm btn-outline-warning mx-2'>Edit</Link>
-                            //                 <button onClick={() => {
-                            //                     handleDeletePost(post.id)
-                            //                 }} className='btn btn-sm btn-outline-danger'>Delete</button>
-                            //             </div>
-                            //         </div>
-                            //     ))
-                            // ) : (
                             data.map((item, itemIdx) => (
                                 <div className='rounded align-items-center p-2 bg-light row mb-2 card_post' key={itemIdx}>
                                     <div className='col-1 text-center'>{itemIdx + 1}</div>
@@ -85,7 +83,7 @@ const Table = ({ data, tHead, isUserDashboard }) => {
                                     <div className='col text-center'>
                                         <Link to={`/dashboard/edit-post/${item.id}`} className='btn btn-sm btn-outline-warning mx-2'>Edit</Link>
                                         <button onClick={() => {
-                                            handleDeletePost(item.id)
+                                            handleDeletePostButton(item.id)
                                         }} className='btn btn-sm btn-outline-danger'>Delete</button>
                                     </div>
                                 </div>
@@ -100,7 +98,7 @@ const Table = ({ data, tHead, isUserDashboard }) => {
                                         <div className='col text-center'>
                                             <Link to={`/dashboard-user/edit-post/${item.id}`} className='btn btn-sm btn-outline-warning mx-2'>Edit</Link>
                                             <button onClick={() => {
-                                                handleDeleteAuthor(item.id);
+                                                handleDeletePostButton(item.id);
                                             }
                                             } className='btn btn-sm btn-outline-danger'>Delete</button>
                                         </div>
@@ -114,7 +112,7 @@ const Table = ({ data, tHead, isUserDashboard }) => {
                                         <div className='col text-center'>
                                             <Link to={`/dashboard/authors/edit-author/${item.id}`} className='btn btn-sm btn-outline-warning mx-2'>Edit</Link>
                                             <button onClick={() => {
-                                                handleDeleteAuthor(item.id);
+                                                handleDeleteAuthorButton(item.id);
                                             }
                                             } className='btn btn-sm btn-outline-danger'>Delete</button>
                                         </div>

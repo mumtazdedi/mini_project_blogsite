@@ -7,7 +7,7 @@ import Table from '../../components/Table';
 /** Apollo client */
 import { useMutation, useQuery } from '@apollo/client';
 /** GraphQL */
-import { GET_POSTS } from '../../GraphQL/Posts/queries';
+import { GET_POSTS, DELETE_POST } from '../../GraphQL/Posts/queries';
 
 const DashboardUser = () => {
 
@@ -18,6 +18,10 @@ const DashboardUser = () => {
     const [post, setPost] = useState([]);
 
     const { loading, error, data } = useQuery(GET_POSTS);
+
+    const [deletePost] = useMutation(DELETE_POST, {
+        refetchQueries: [{ query: GET_POSTS }]
+    })
 
     useEffect(() => {
         if (loading === false && data !== undefined) {
@@ -48,7 +52,6 @@ const DashboardUser = () => {
         setIsUserDashboard(true);
     }, []);
 
-
     return (
         <>
             <NaviBar isUserDashboard={isUserDashboard} />
@@ -58,10 +61,14 @@ const DashboardUser = () => {
                 {
                     oneAuthor !== [] ? (
                         <div className='m-3'>
-                            <Table data={post} tHead={tHead} isUserDashboard={isUserDashboard} />
+                            <Table data={post} tHead={tHead} isUserDashboard={isUserDashboard} deletePost={deletePost} />
                         </div>
                     ) : (
-                        <h1>loading.....</h1>
+                        <div className='loader'>
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     )
 
                 }

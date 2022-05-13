@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 /** Components */
 import Form from '../../components/Form';
 /** React Router */
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 /** Apollo client */
 import { useMutation, useQuery, useSubscription } from '@apollo/client';
 /** GraphQL */
@@ -17,6 +17,8 @@ const AddNewAuthor = () => {
     });
 
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     const [inputs, setInputs] = useState([
         {
@@ -78,8 +80,12 @@ const AddNewAuthor = () => {
 
 
     useEffect(() => {
-        if (localStorage.getItem('user') === null) {
-            navigate('/login');
+        if (location.pathname === '/dashboard/authors/add-new-author') {
+            if (localStorage.getItem('user') === null) {
+                navigate('/login');
+            } else if (JSON.parse(localStorage.getItem('user')).role !== 'user') {
+                navigate('/dashboard-user');
+            }
         }
     }, []);
 
@@ -98,13 +104,23 @@ const AddNewAuthor = () => {
         })
 
         console.log(NewAuthor);
+        if (location.pathname === '/dashboard/authors/add-new-author') {
+            navigate('/dashboard/authors');
+        } else if (location.pathname === '/register') {
+            navigate('/login');
+        }
 
-        navigate('/dashboard/authors');
     }
 
     return (
         <div className='m-3'>
-            <h1 className='m-3'>Tambah Penulis Baru</h1>
+            {
+                location.pathname === '/register' ? (
+                    <h1 className='m-3'>Register akun penulis</h1>
+                ) : (
+                    <h1 className='m-3'>Tambah Penulis Baru</h1>
+                )
+            }
             <div className='p-3 bg_primary rounded text-light'>
                 <Form addNewAuthor={addNewAuthor} isFormPost={isFormPost} isEdit={isEdit} inputs={inputs} setInputs={setInputs} />
             </div>

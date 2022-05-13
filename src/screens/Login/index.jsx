@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Form from '../../components/Form';
 /** React Router */
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 /** Apollo client */
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 /** GraphQL */
-import { GET_ONE_USER, GET_AUTHORS } from '../../GraphQL/Users/queries';
+import { GET_ONE_USER } from '../../GraphQL/Users/queries';
 /** Sweetalert2 */
 import Swal from 'sweetalert2';
 
@@ -41,10 +41,19 @@ const Login = () => {
                         title: 'Signed in successfully'
                     })
                 }
+            } else {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Username atau password salah'
+                })
             }
         },
         onError: (err) => {
             const error = err.graphQLErrors[0].message;
+            Toast.fire({
+                icon: 'success',
+                title: error
+            })
             console.log(error);
         }
     })
@@ -65,6 +74,16 @@ const Login = () => {
             value: '',
         }
     ])
+
+    useEffect(() => {
+        if (localStorage.getItem('user') !== null) {
+            if (JSON.parse(localStorage.getItem('user')).role === 'admin') {
+                navigate('/dashboard');
+            } else if (JSON.parse(localStorage.getItem('user')).role === 'author') {
+                navigate('/dashboard-user');
+            }
+        }
+    }, []);
 
     const handleLogin = (authorData) => {
         // console.log(authorData);
@@ -87,8 +106,9 @@ const Login = () => {
                     <h1 className='text-center bg_logo'>Mari<span className='logo'>Baca.co</span></h1>
                 </div>
                 <div className='col'>
-                    <div className='rounded bg_login'>
+                    <div className='row rounded bg_login'>
                         <Form inputs={inputs} handleLogin={handleLogin} isLoginPage={isLoginPage} setInputs={setInputs} />
+                        <Link to='/register' className='mt-2'>Belum punya akun? klik disini untuk Registrasi</Link>
                     </div>
                 </div>
             </div>

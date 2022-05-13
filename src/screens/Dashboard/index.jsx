@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import NaviBar from '../../components/NaviBar';
 import Table from '../../components/Table';
 /** Apollo client */
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 /** GraphQL */
-import { GET_POSTS, ADD_POST } from '../../GraphQL/Posts/queries';
+import { GET_POSTS, DELETE_POST } from '../../GraphQL/Posts/queries';
 
 const Dashboard = () => {
 
@@ -17,11 +17,16 @@ const Dashboard = () => {
 
     const { loading, error, data } = useQuery(GET_POSTS);
 
+    const [deletePost] = useMutation(DELETE_POST, {
+        refetchQueries: [{ query: GET_POSTS }]
+    })
+
     useEffect(() => {
         if (localStorage.getItem('user') === null) {
             navigate('/login');
         }
     }, []);
+
 
     const handleNewPostButton = () => {
         navigate('/dashboard/add-new-post');
@@ -36,16 +41,14 @@ const Dashboard = () => {
                 {
                     loading === false && data ? (
                         <div className='m-3'>
-                            <Table data={data.blogs_posts} tHead={tHead} />
+                            <Table data={data.blogs_posts} tHead={tHead} deletePost={deletePost} />
                         </div>
                     ) : (
-                        // oneAuthorData !== undefined ? (
-                        //     <div className='m-3'>
-                        //         <Table oneAuthorData={oneAuthorData.authors} tHead={tHead} />
-                        //     </div>
-                        // ) : (
-                        <h1>loading.....</h1>
-                        // )
+                        <div className='loader'>
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     )
                 }
             </div>

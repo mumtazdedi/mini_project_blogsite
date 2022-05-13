@@ -7,9 +7,10 @@ import Carousel from 'react-bootstrap/Carousel';
 /** React Router */
 import { useNavigate, useLocation } from 'react-router-dom';
 /** Apollo client */
-import { useMutation, useSubscription } from '@apollo/client';
+import { useSubscription } from '@apollo/client';
 /** GraphQL */
 import { SUBSCRIPTION_POSTS } from '../../GraphQL/Posts/queries';
+import Footer from '../../components/Footer';
 
 const Home = () => {
 
@@ -65,7 +66,7 @@ const Home = () => {
         <div>
             <NaviBar isHomePage={isHomePage} />
             {
-                loading == false && data && postData ? (
+                loading === false && data && postData ? (
                     <div>
                         <div>
                             {
@@ -95,7 +96,7 @@ const Home = () => {
                         <div className='m-3'>
                             <h5>Postingan Terbaru</h5>
                         </div>
-                        <div className='row m-3'>
+                        <div className='row m-3 content_home'>
                             {postData.map((post, postIdx) => (
                                 <div className='col-lg-3 col-md-4 col-sm-6 my-3'>
                                     <Card className='card_post' style={{ width: '18rem' }} key={postIdx}>
@@ -137,9 +138,14 @@ const Home = () => {
                                 </div>
                             )
                         }
+                        <Footer />
                     </div>
                 ) : (
-                    <h1>loading.....</h1>
+                    <div className='loader'>
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                 )
             }
         </div>

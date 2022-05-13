@@ -9,6 +9,7 @@ import NaviBar from '../../components/NaviBar';
 /** React Quill */
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
+import Footer from '../../components/Footer';
 
 const DetailArticle = () => {
 
@@ -34,14 +35,6 @@ const DetailArticle = () => {
         }
     }, [data, location]);
 
-    // useEffect(() => {
-    //     if (loading === false && data !== undefined) {
-    //         const newData = data.blogs_posts.filter(post => post.id === parseInt(id));
-    //         console.log(newData);
-    //         setPostData(newData);
-    //     }
-    // }, [data]);
-
     useEffect(() => {
         setIsHomePage(true);
     }, []);
@@ -53,32 +46,37 @@ const DetailArticle = () => {
             <NaviBar isHomePage={isHomePage} />
             {
                 loading === false && data !== undefined && postData !== undefined && postData.user !== undefined ? (
-                    <div>
-                        <div className='row'>
-                            <div className='col mx-3 my-3 p-2 rounded bg_primary card_title'>
-                                <span>{postData.judul}</span>
-                            </div>
-                        </div>
-                        <div className='row'>
-                            <div className='col mx-3 p-2 rounded card_content'>
-                                <img src={postData.post_banner} alt={postData.judul} className='img-fluid rounded detail_post_banner' />
-                                <div className='card_info bg_primary mt-2 p-2 rounded'>
-                                    <span><b>Penulis : </b> {postData.user.nama}, <b>Diupload pada : </b> {postData.tgl_upload}</span>
-                                </div>
-                                <div className='my-2 bg_isi p-2 rounded'>
-                                    {/* {postData[0].isi} */}
-                                    <ReactQuill
-                                        value={postData.isi}
-                                        readOnly={true}
-                                        theme={"bubble"}
-                                    />
+                    <>
+                        <div>
+                            <div className='row'>
+                                <div className='col mx-3 my-3 p-2 rounded bg_primary card_title'>
+                                    <span>{postData.judul}</span>
                                 </div>
                             </div>
+                            <div className='row'>
+                                <div className='col mx-3 p-2 rounded card_content'>
+                                    <img src={postData.post_banner} alt={postData.judul} className='img-fluid rounded detail_post_banner' />
+                                    <div className='card_info bg_primary mt-2 p-2 rounded'>
+                                        <span><b>Penulis : </b> {postData.user.nama}, <b>Diupload pada : </b> {postData.tgl_upload}</span>
+                                    </div>
+                                    <div className='my-2 bg_isi p-2 rounded'>
+                                        {/* {postData[0].isi} */}
+                                        <ReactQuill
+                                            value={postData.isi}
+                                            readOnly={true}
+                                            theme={"bubble"}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <Footer />
+                    </>
                 ) : (
-                    <div>
-                        <h1>Loading...</h1>
+                    <div className='loader'>
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </div>
                 )
             }

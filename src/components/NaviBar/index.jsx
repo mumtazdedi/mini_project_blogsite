@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 /** React Bootstrap */
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,18 +8,25 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 /** GraphQL */
 import { GET_AUTHORS } from '../../GraphQL/Users/queries';
+/** Sweetalert2 */
+import Swal from 'sweetalert2';
 
 const NaviBar = ({ isHomePage, isUserDashboard }) => {
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
     const navigate = useNavigate();
     const { loading, error, data, refetch } = useQuery(GET_AUTHORS);
-
-    // useEffect(() => {
-    //     if (loading === false && data !== undefined) {
-    //         const img = data.blogs_users.filter(item => item.id === JSON.parse(localStorage.getItem('user')).id);
-    //         console.log(img);
-    //     }
-    // }, []);
 
     const handlePostButton = () => {
         navigate('/dashboard');
@@ -30,8 +37,29 @@ const NaviBar = ({ isHomePage, isUserDashboard }) => {
     }
 
     const handleLogoutButton = () => {
-        localStorage.removeItem('user');
-        navigate('/login');
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Anda akan keluar dari akun anda!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, keluar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('user');
+                Swal.fire(
+                    'Sukses logout',
+                    'Anda berhasil logout.',
+                    'success'
+                )
+                navigate('/login');
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Logout berhasil'
+                })
+            }
+        })
     }
 
     const handleHomeButton = () => {
@@ -54,6 +82,10 @@ const NaviBar = ({ isHomePage, isUserDashboard }) => {
         navigate('/sosial');
     }
 
+    const handleLoginButton = () => {
+        navigate('/login');
+    }
+
     return (
         <div>
             {
@@ -67,6 +99,11 @@ const NaviBar = ({ isHomePage, isUserDashboard }) => {
                                 <Nav.Link onClick={handleKategoriPolitik} >Politik</Nav.Link>
                                 <Nav.Link onClick={handleKategoriAgama} >Agama</Nav.Link>
                                 <Nav.Link onClick={handleKategoriBudaya} >Budaya</Nav.Link>
+                                {
+                                    localStorage.getItem('user') === null ? (
+                                        <button onClick={handleLoginButton} className="mx-2 px-2 rounded bg_primary">Login</button>
+                                    ) : ("")
+                                }
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>

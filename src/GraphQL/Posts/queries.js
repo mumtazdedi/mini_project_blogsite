@@ -61,7 +61,7 @@ export const DELETE_POST = gql`
             judul
             isi
             id_penulis
-            author {
+            user {
                 id
                 nama
             }

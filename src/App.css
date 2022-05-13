@@ -49,11 +49,16 @@ p {
   width: fit-content;
   padding: 1rem 1rem;
   background-color: #79B4B7;
+  color: #ffffff;
 }
 
 .login_page {
   height: 100vh;
-  background-image: url('./assets/sample-pattern.png');
+  background-image: url('./assets/images/sample-pattern.png');
+}
+
+.content_home {
+  min-height: 1080px;
 }
 
 .carousel_img {
@@ -111,6 +116,27 @@ p {
   background-color: #ffffff;
   color: #000000;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.footer {
+  min-height: 180px;
+}
+
+.footer_logo {
+  font-size: 32px;
+  /* vertical-align: middle; */
+}
+
+.footer_text {
+  max-width: 300px;
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
 }
 
 .ql-snow * {
