@@ -7,6 +7,8 @@ import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import { GET_AUTHORS, UPDATE_USER } from '../../GraphQL/Users/queries';
 /** React Router */
 import { useParams, useNavigate } from 'react-router-dom';
+/** Sweetalert2 */
+import Swal from 'sweetalert2';
 
 const EditAuthor = () => {
 
@@ -99,6 +101,12 @@ const EditAuthor = () => {
         });
 
         navigate('/dashboard/authors');
+
+        Swal.fire(
+            'Sukses!',
+            'Sukses mengupdate data penulis!',
+            'success'
+        )
     }
 
     return (

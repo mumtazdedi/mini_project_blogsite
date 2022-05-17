@@ -86,6 +86,14 @@ const NaviBar = ({ isHomePage, isUserDashboard }) => {
         navigate('/login');
     }
 
+    const handleDashboardButton = () => {
+        if (JSON.parse(localStorage.getItem('user')).role === "author") {
+            navigate('/dashboard-user');
+        } else if (JSON.parse(localStorage.getItem('user')).role === "admin") {
+            navigate('/dashboard');
+        }
+    }
+
     return (
         <div>
             {
@@ -102,14 +110,18 @@ const NaviBar = ({ isHomePage, isUserDashboard }) => {
                                 {
                                     localStorage.getItem('user') === null ? (
                                         <button onClick={handleLoginButton} className="mx-2 px-2 rounded bg_primary">Login</button>
-                                    ) : ("")
+                                    ) : (
+                                        <Nav.Link>
+                                            <button className='btn btn-sm bg_primary rounded-pill' onClick={handleDashboardButton} >Dashboard</button>
+                                        </Nav.Link>
+                                    )
                                 }
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>
                 ) : (
                     <Navbar className='shadow px-3' bg="light" variant="light">
-                        <Navbar.Brand className='logo_text' href="#home">Mari<span className='logo'>Baca.co</span></Navbar.Brand>
+                        <Navbar.Brand className='logo_text' onClick={handleHomeButton}>Mari<span className='logo'>Baca.co</span></Navbar.Brand>
                         <Nav className="me-auto">
                             <Nav.Link onClick={handlePostButton}>Post</Nav.Link>
                             {

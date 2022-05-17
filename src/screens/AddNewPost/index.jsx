@@ -8,6 +8,8 @@ import { useMutation, useQuery } from '@apollo/client';
 /** GraphQL */
 import { GET_POSTS, ADD_POST } from '../../GraphQL/Posts/queries';
 import { GET_AUTHORS } from '../../GraphQL/Users/queries';
+/** Sweetalert2 */
+import Swal from 'sweetalert2';
 
 const AddNewPost = () => {
 
@@ -100,8 +102,18 @@ const AddNewPost = () => {
         })
         if (location.pathname === '/dashboard-user/add-new-post') {
             navigate('/dashboard-user');
+            Swal.fire(
+                'Sukses!',
+                'Sukses menambahkan postingan baru!',
+                'success'
+            )
         } else {
             navigate('/dashboard');
+            Swal.fire(
+                'Sukses!',
+                'Sukses menambahkan postingan baru!',
+                'success'
+            )
         }
     }
 

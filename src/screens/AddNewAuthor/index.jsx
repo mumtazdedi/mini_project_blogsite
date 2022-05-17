@@ -7,6 +7,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useSubscription } from '@apollo/client';
 /** GraphQL */
 import { GET_USERS, ADD_USER, GET_AUTHORS } from '../../GraphQL/Users/queries';
+/** sweetalert2 */
+import Swal from 'sweetalert2';
 
 const AddNewAuthor = () => {
 
@@ -106,8 +108,18 @@ const AddNewAuthor = () => {
         console.log(NewAuthor);
         if (location.pathname === '/dashboard/authors/add-new-author') {
             navigate('/dashboard/authors');
+            Swal.fire(
+                'Sukses!',
+                'Sukses menambahkan penulis baru!',
+                'success'
+            )
         } else if (location.pathname === '/register') {
             navigate('/login');
+            Swal.fire(
+                'Sukses!',
+                'Registrasi berhasil',
+                'success'
+            )
         }
 
     }
