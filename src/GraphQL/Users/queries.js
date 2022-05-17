@@ -76,7 +76,7 @@ mutation MyMutation($id: Int!, $nama: String!, $profile_pic: String!, $role: Str
 
 export const DELETE_USER = gql`
 mutation deleteAuthor($id: Int!) {
-  delete_blogs_user_by_pk(id: $id){
+  delete_blogs_users_by_pk(id: $id){
     id
     nama
     role
