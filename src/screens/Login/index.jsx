@@ -25,8 +25,8 @@ const Login = () => {
 
     const [getOneUser, { data, loading, error }] = useLazyQuery(GET_ONE_USER, {
         onCompleted: (userData) => {
-            if (userData.blogs_users.length > 0) {
-                localStorage.setItem('user', JSON.stringify(userData.blogs_users[0]));
+            if (userData.users.length > 0) {
+                localStorage.setItem('user', JSON.stringify(userData.users[0]));
                 console.log(JSON.parse(localStorage.getItem('user')));
                 if (JSON.parse(localStorage.getItem('user')).role === 'admin') {
                     navigate('/dashboard');

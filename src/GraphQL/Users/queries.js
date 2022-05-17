@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_USERS = gql`
 query getAllUsers {
-    blogs_users {
+    users {
       id
       nama
       profile_pic
@@ -15,7 +15,7 @@ query getAllUsers {
 
 export const GET_ONE_USER = gql`
   query getOneUser($username: String!, $password: String!) {
-    blogs_users(where: {username: {_eq: $username}, password: {_eq: $password}}) {
+    users(where: {username: {_eq: $username}, password: {_eq: $password}}) {
       id
       nama
       username
@@ -37,7 +37,7 @@ export const GET_ONE_USER = gql`
 
 export const GET_AUTHORS = gql`
 query getAllAuthors {
-    blogs_users(where: {role: {_eq: "author"}}) {
+    users(where: {role: {_eq: "author"}}) {
       id
       nama
       profile_pic
@@ -50,7 +50,7 @@ query getAllAuthors {
 
 export const ADD_USER = gql`
 mutation addUser($nama: String!, $profile_pic: String!, $role: String!, $username: String!, $password: String!) {
-    insert_blogs_users_one(object: {nama: $nama, profile_pic: $profile_pic, role: $role, username: $username, password: $password}) {
+    insert_users_one(object: {nama: $nama, profile_pic: $profile_pic, role: $role, username: $username, password: $password}) {
       id
       nama
       profile_pic
@@ -63,7 +63,7 @@ mutation addUser($nama: String!, $profile_pic: String!, $role: String!, $usernam
 
 export const UPDATE_USER = gql`
 mutation MyMutation($id: Int!, $nama: String!, $profile_pic: String!, $role: String!, $username: String!, $password: String!) {
-    update_blogs_users_by_pk(pk_columns: {id: $id}, _set: {nama: $nama, profile_pic: $profile_pic, role: $role, username: $username, password: $password}) {
+    update_users_by_pk(pk_columns: {id: $id}, _set: {nama: $nama, profile_pic: $profile_pic, role: $role, username: $username, password: $password}) {
       id
       nama
       profile_pic

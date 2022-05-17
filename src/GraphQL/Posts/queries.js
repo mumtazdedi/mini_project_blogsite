@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_POSTS = gql`
     query data {
-        blogs_posts (order_by: {tgl_upload: desc}){
+        posts (order_by: {tgl_upload: desc}){
             id
             id_penulis
             judul
@@ -20,7 +20,7 @@ export const GET_POSTS = gql`
 
 export const SUBSCRIPTION_POSTS = gql`
     subscription data($offset: Int!) {
-        blogs_posts (limit: 12, offset: $offset, order_by: {tgl_upload: desc}){
+        posts (limit: 12, offset: $offset, order_by: {tgl_upload: desc}){
             id
             id_penulis
             judul
@@ -38,7 +38,7 @@ export const SUBSCRIPTION_POSTS = gql`
 
 export const ADD_POST = gql`
     mutation AddNewPost($judul: String!, $isi: String!, $id_penulis: Int!, $post_banner: String!, $kategori: String!) {
-        insert_blogs_posts_one(object: {judul: $judul, isi: $isi, post_banner: $post_banner , kategori: $kategori, user: {data: {id: $id_penulis}, on_conflict: {constraint: users_pkey, update_columns: id}}}) {
+        insert_posts_one(object: {judul: $judul, isi: $isi, post_banner: $post_banner , kategori: $kategori, user: {data: {id: $id_penulis}, on_conflict: {constraint: users_pkey, update_columns: id}}}) {
             id
             id_penulis
             judul
@@ -56,7 +56,7 @@ export const ADD_POST = gql`
 
 export const DELETE_POST = gql`
     mutation deletePost($id: Int!) {
-        delete_blogs_posts_by_pk(id: $id){
+        delete_posts_by_pk(id: $id){
             id
             judul
             isi

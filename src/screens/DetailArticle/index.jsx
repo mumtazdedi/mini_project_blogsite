@@ -29,7 +29,7 @@ const DetailArticle = () => {
 
     useEffect(() => {
         if (loading === false && data !== undefined) {
-            const newData = data.blogs_posts.filter(post => post.id === parseInt(id));
+            const newData = data.posts.filter(post => post.id === parseInt(id));
             console.log(data);
             setPostData(newData[0]);
         }

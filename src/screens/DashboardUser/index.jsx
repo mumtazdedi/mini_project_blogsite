@@ -25,7 +25,7 @@ const DashboardUser = () => {
 
     useEffect(() => {
         if (loading === false && data !== undefined) {
-            const postOneUser = data.blogs_posts.filter(post => post.id_penulis === JSON.parse(localStorage.getItem('user')).id);
+            const postOneUser = data.posts.filter(post => post.id_penulis === JSON.parse(localStorage.getItem('user')).id);
             setPost(postOneUser);
         }
     }, [data]);

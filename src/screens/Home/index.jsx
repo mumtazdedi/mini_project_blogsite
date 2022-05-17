@@ -35,19 +35,19 @@ const Home = () => {
     useEffect(() => {
         if (loading === false && data !== undefined) {
             if (location.pathname === '/') {
-                const newData = [...data.blogs_posts];
+                const newData = [...data.posts];
                 setPostData(newData);
             } else if (location.pathname === '/sosial') {
-                const newData = data.blogs_posts.filter(post => post.kategori === 'Sosial');
+                const newData = data.posts.filter(post => post.kategori === 'Sosial');
                 setPostData(newData);
             } else if (location.pathname === '/agama') {
-                const newData = data.blogs_posts.filter(post => post.kategori === 'Agama');
+                const newData = data.posts.filter(post => post.kategori === 'Agama');
                 setPostData(newData);
             } else if (location.pathname === '/budaya') {
-                const newData = data.blogs_posts.filter(post => post.kategori === 'Budaya');
+                const newData = data.posts.filter(post => post.kategori === 'Budaya');
                 setPostData(newData);
             } else if (location.pathname === '/politik') {
-                const newData = data.blogs_posts.filter(post => post.kategori === 'Politik');
+                const newData = data.posts.filter(post => post.kategori === 'Politik');
                 setPostData(newData);
             }
         }
@@ -73,7 +73,7 @@ const Home = () => {
                                 location.pathname === '/' ? (
                                     <Carousel>
                                         {
-                                            data.blogs_posts.slice(0, 3).map((post, itemIdx) => (
+                                            data.posts.slice(0, 3).map((post, itemIdx) => (
                                                 <Carousel.Item onClick={() => handleShowMoreButton(post.id)} key={itemIdx}>
                                                     <img
                                                         className="d-block carousel_img"
@@ -113,7 +113,7 @@ const Home = () => {
                             ))}
                         </div>
                         {
-                            data.blogs_posts.length === 12 ? (
+                            data.posts.length === 12 ? (
                                 offset === 0 ? (
                                     <div className='row m-3'>
                                         <div className='col'>

@@ -173,7 +173,7 @@ const Form = ({ inputs, setInputs, addNewAuthor, addNewPost, dataAuthors, isForm
                             <select className='form-select mb-3' onChange={(e) => handleChange(e.target.value, inputIdx)}>
                                 <option value=''>Pilih Penulis</option>
                                 {
-                                    dataAuthors.blogs_users.map((author, authorIdx) => (
+                                    dataAuthors.users.map((author, authorIdx) => (
                                         <option key={authorIdx} value={author.id} selected={author.id === inputs[2].value ? "selected" : ""} >{author.nama}</option>
                                     ))
                                 }

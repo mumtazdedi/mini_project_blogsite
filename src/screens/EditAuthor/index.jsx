@@ -20,7 +20,7 @@ const EditAuthor = () => {
 
     const { loading, error, data } = useQuery(GET_AUTHORS, {
         onCompleted: (data) => {
-            const author = data.blogs_users.filter((author) => author.id === parseInt(id));
+            const author = data.users.filter((author) => author.id === parseInt(id));
             setAuthorData(author);
             // console.log(author);
         }

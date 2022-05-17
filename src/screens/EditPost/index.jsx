@@ -20,7 +20,7 @@ const EditPost = () => {
 
     const { loading, error, data } = useQuery(GET_POSTS, {
         onCompleted: (data) => {
-            const post = data.blogs_posts.filter((post) => post.id === parseInt(id));
+            const post = data.posts.filter((post) => post.id === parseInt(id));
             setPostData(post);
             // console.log(postData);
         }

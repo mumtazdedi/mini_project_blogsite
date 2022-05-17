@@ -41,7 +41,7 @@ const Dashboard = () => {
                 {
                     loading === false && data ? (
                         <div className='m-3'>
-                            <Table data={data.blogs_posts} tHead={tHead} deletePost={deletePost} />
+                            <Table data={data.posts} tHead={tHead} deletePost={deletePost} />
                         </div>
                     ) : (
                         <div className='loader'>

@@ -40,7 +40,7 @@ const AuthorsPage = () => {
                 {
                     loading === false && data ? (
                         <div className='m-3'>
-                            <Table data={data.blogs_users} tHead={tHead} deleteAuthor={deleteAuthor} />
+                            <Table data={data.users} tHead={tHead} deleteAuthor={deleteAuthor} />
                         </div>
                     ) : (
                         <div className='loader'>

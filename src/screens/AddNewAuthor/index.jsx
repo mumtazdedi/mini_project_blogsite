@@ -85,7 +85,7 @@ const AddNewAuthor = () => {
         if (location.pathname === '/dashboard/authors/add-new-author') {
             if (localStorage.getItem('user') === null) {
                 navigate('/login');
-            } else if (JSON.parse(localStorage.getItem('user')).role !== 'user') {
+            } else if (JSON.parse(localStorage.getItem('user')).role !== 'admin') {
                 navigate('/dashboard-user');
             }
         }
